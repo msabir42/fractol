@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   destroy_mandelbrot.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msabir <msabir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 13:45:47 by msabir            #+#    #+#             */
-/*   Updated: 2025/04/11 10:27:03 by msabir           ###   ########.fr       */
+/*   Created: 2025/04/09 13:46:42 by msabir            #+#    #+#             */
+/*   Updated: 2025/04/09 20:20:40 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int	main(int argc, char **argv)
+void	destroy_mlx(t_fractal *fract)
 {
-	if (argc < 2)
-	{
-		ft_putstr("Usage: ./fractol Mandelbrot\n");
-		ft_putstr("       ./fractol Julia [c_real] [c_imag]\n");
-		return (1);
-	}
-	if (ft_strcmp(argv[1], "Mandelbrot") == 0)
-		return (handle_mandelbrot());
-	else if (ft_strcmp(argv[1], "Julia") == 0)
-		return (handle_julia(argc, argv));
-	ft_putstr("Invalid fractal type. Choose Mandelbrot or Julia.\n");
-	return (1);
+	free(fract->mlx);
+	print_error();
+}
+
+void	destroy_window(t_fractal *fract)
+{
+	mlx_destroy_display(fract->mlx);
+	free(fract->mlx);
+	print_error();
+}
+
+void	destroy_image(t_fractal *fract)
+{
+	mlx_destroy_window(fract->mlx, fract->w);
+	mlx_destroy_display(fract->mlx);
+	free(fract->mlx);
+	print_error();
 }
